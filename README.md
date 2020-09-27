@@ -1,2 +1,2 @@
-# Travel-Mate-Back
-Travel Mate application back-end
+# Travel-Mate
+Travel Mate application
