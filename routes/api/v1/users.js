@@ -1,6 +1,8 @@
 const express = require('express');
 const bcrypt = require('bcryptjs');
 const gravatar = require('gravatar');
+const jwt = require('jsonwebtoken');
+const config = require('config');
 const User = require('../../../models/User');
 
 const router = express.Router();
@@ -20,18 +22,20 @@ router.get(
 		).isLength({ min: 8 }),
 	],
 	async (req, res) => {
+		const { name, email, password } = req.body;
 		const errors = validationResult(req);
+
 		if (!errors.isEmpty()) {
 			return res.status(400).json({ errors: errors.array() });
 		}
-
-		const { name, email, password } = req.body;
 
 		try {
 			let user = await User.findOne({ email });
 
 			if (user) {
-				return res.status(400).json({ errors: [{ msg: 'User already exsists' }] });
+				return res
+					.status(400)
+					.json({ errors: [{ msg: 'User already exsists' }] });
 			}
 			const avatar = gravatar.url(email, {
 				s: '200',
@@ -50,8 +54,24 @@ router.get(
 
 			user.password = await bcrypt.hash(password, salt);
 
-			await user.save()
-			res.send('user registered');
+			await user.save();
+
+			const payload = {
+				user: {
+					id: user.id,
+				},
+			};
+
+			// TODO: Change expiresIn time to something more reasonable
+			jwt.sign(
+				payload,
+				config.get('jwtSecret'),
+				{ expiresIn: 360000 },
+				(error, token) => {
+					if (error) throw error;
+					res.json({ token });
+				}
+			);
 		} catch (error) {
 			console.error(error.message);
 			res.status(500).send('server error');
