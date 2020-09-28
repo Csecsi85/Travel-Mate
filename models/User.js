@@ -20,12 +20,12 @@ const userSchema = new mongoose.Schema({
 		type: Date,
 		default: Date.now,
 	},
-	// trip_id: [
-	// 	{
-	// 		type: mongoose.Schema.Types.ObjectId,
-	// 		ref: Trip,
-	// 	},
-	// ],
+	trips: [
+		{
+			type: mongoose.Schema.Types.ObjectId,
+			ref: 'trip',
+		},
+	],
 	// emailVerified: {
 	// 	type: Boolean,
 	// 	default: false,
