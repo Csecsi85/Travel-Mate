@@ -11,7 +11,7 @@ const { check, validationResult } = require('express-validator');
 // @route   POST api/v1/users
 // @desc    Register user
 // @access  Public
-router.get(
+router.post(
 	'/',
 	[
 		check('name', 'Name is required').not().isEmpty(),
