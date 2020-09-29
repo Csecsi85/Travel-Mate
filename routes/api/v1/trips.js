@@ -101,6 +101,10 @@ router.get('/:id', auth, async (req, res) => {
 		}
 		res.status(200).json(trip);
 	} catch (error) {
+		// Checks if the :id passed in is not a valid ObjectId
+		if (error.kind == 'ObjectId') {
+			return res.status(400).json({ msg: 'There is no trip to show' });
+		}
 		console.error(error.message);
 		res.status(500).send('Server error');
 	}
