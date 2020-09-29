@@ -10,34 +10,36 @@ const router = express.Router();
 // @desc    Get current users trips
 // @access  Private
 router.get('/', auth, async (req, res) => {
-
 	try {
-		const trips = await User.findById( req.user.id ).populate('trips')
+		const trips = await User.findById(req.user.id).populate('trips');
 		if (!trips) {
-			return res.status(400).json({ msg: 'There are no trips to show'})
-		};
-		res.status(200).json(trips)
+			return res.status(400).json({ msg: 'There are no trips to show' });
+		}
+		res.status(200).json(trips);
 	} catch (error) {
 		console.error(error.message);
-		res.status(500).send('Server error')
+		res.status(500).send('Server error');
 	}
 });
 
 // @route   POST api/v1/trips
 // @desc    Create a trip
 // @access  Private
-router.post('/', [
-	auth,
+router.post(
+	'/',
 	[
-		check('title', 'Trip title is required').not().isEmpty(),
-		check('from', 'Please enter a trip start date').not().isEmpty(),
-		check('to', 'Please enter a trip end date').not().isEmpty(),
-		check('baseCurrency', 'Please select your base currency').not().isEmpty()
+		auth,
+		[
+			check('title', 'Trip title is required').not().isEmpty(),
+			check('from', 'Please enter a trip start date').not().isEmpty(),
+			check('to', 'Please enter a trip end date').not().isEmpty(),
+			check('baseCurrency', 'Please select your base currency').not().isEmpty(),
+		],
 	],
-], async (req, res) => {
+	async (req, res) => {
 		const errors = validationResult(req);
 		if (!errors.isEmpty()) {
-			return res.status(400).json({ errors: errors.array() })
+			return res.status(400).json({ errors: errors.array() });
 		}
 		const {
 			user,
@@ -66,7 +68,7 @@ router.post('/', [
 				// Create new trip and add trip_id to user trip_id array
 				const trip = new Trip(tripFields);
 				user.trips.push(trip.id);
-				
+
 				await user.save();
 				await trip.save();
 
@@ -78,9 +80,29 @@ router.post('/', [
 			}
 		} catch (error) {
 			console.error(_error.message);
-			return res.status(500).send('Server error')
+			return res.status(500).send('Server error');
 		}
+	}
+);
 
+// @route   Get api/v1/trips/:id
+// @desc    Get a trip by trip ID
+// @access  Private
+router.get('/:id', auth, async (req, res) => {
+	try {
+		// Gets the trip and checks if the logged in user is assigned to that trip
+		const trip = await Trip.find({
+			user: { $in: req.user.id },
+			_id: req.params.id
+		});
+
+		if (trip.length === 0) {
+			return res.status(400).json({ msg: 'There is no trip to show' });
+		}
+		res.status(200).json(trip);
+	} catch (error) {
+		console.error(error.message);
+		res.status(500).send('Server error');
+	}
 });
-
 module.exports = router;
