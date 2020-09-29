@@ -93,7 +93,7 @@ router.get('/:id', auth, async (req, res) => {
 		// Gets the trip and checks if the logged in user is assigned to that trip
 		const trip = await Trip.find({
 			user: { $in: req.user.id },
-			_id: req.params.id
+			_id: req.params.id,
 		});
 
 		if (trip.length === 0) {
@@ -110,4 +110,33 @@ router.get('/:id', auth, async (req, res) => {
 	}
 });
 
+// @route DELETE api/v1/trips/:id
+// @desc Delete trip and remove tripID from trips array in users
+// @access Private
+router.delete('/:id', auth, async (req, res) => {
+	try {
+		// Find the trip and delete it
+		const trip = await Trip.find({
+			user: { $in: req.user.id },
+			_id: req.params.id,
+		});
+		if (trip.length !== 0) {
+			// If the trip was assigned to a user delete trip_id from the array
+			await User.updateMany(
+				{ trips: { $in: req.params.id } },
+				{ $pull: { trips: { $in: req.params.id } } }
+			);
+			// 200 OK
+			return res.status(200).send('Trip has been deleted');
+		}
+
+	} catch (error) {
+		// Checks if the :id passed in is not a valid ObjectId
+		if (error.kind == 'ObjectId') {
+			return res.status(400).json({ msg: 'Trip doesn\'t exsist' });
+		}
+		console.error(error.message);
+		res.status(500).send('Server error');
+	}
+});
 module.exports = router;
