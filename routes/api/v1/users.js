@@ -2,14 +2,13 @@ const express = require('express');
 const bcrypt = require('bcryptjs');
 const gravatar = require('gravatar');
 const jwt = require('jsonwebtoken');
-const config = require('config');
 const { check, validationResult } = require('express-validator');
+const dotenv = require('dotenv');
 const User = require('../../../models/User');
 const auth = require('../../../middleware/auth');
 const Trip = require('../../../models/Trip');
 
 const router = express.Router();
-
 
 // @route   POST api/v1/users
 // @desc    Register user
@@ -68,7 +67,7 @@ router.post(
 			// TODO: Change expiresIn time to something more reasonable
 			jwt.sign(
 				payload,
-				config.get('jwtSecret'),
+				process.env.JWT_SECRET,
 				{ expiresIn: 360000 },
 				(error, token) => {
 					if (error) throw error;
