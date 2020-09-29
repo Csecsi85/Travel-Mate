@@ -6,6 +6,7 @@ const config = require('config');
 const { check, validationResult } = require('express-validator');
 const User = require('../../../models/User');
 const auth = require('../../../middleware/auth');
+const Trip = require('../../../models/Trip');
 
 const router = express.Router();
 
@@ -87,12 +88,22 @@ router.post(
 router.delete('/', auth, async (req, res) => {
 	try {
 		await User.deleteOne({ _id: req.user.id });
-		res.status(200).send('User has been deleted');
+
+		await Trip.updateMany(
+				{ user: { $in: req.user.id } },
+				{ $pull: { user: { $in: req.user.id } } }
+			);
+			// 200 OK
+			return res.status(200).send('User has been deleted');
+		
 	} catch (error) {
+		// Checks if the :id passed in is not a valid ObjectId
+		if (error.kind == 'ObjectId') {
+			return res.status(400).json({ msg: "User doesn't exsist" });
+		}
 		console.error(error.message);
 		res.status(500).send('server error');
 	}
 });
-
 
 module.exports = router;
