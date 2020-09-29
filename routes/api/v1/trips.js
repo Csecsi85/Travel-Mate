@@ -6,22 +6,6 @@ const User = require('../../../models/User');
 
 const router = express.Router();
 
-// @route   GET api/v1/trips
-// @desc    Get current users trips
-// @access  Private
-router.get('/', auth, async (req, res) => {
-	try {
-		const trips = await User.findById(req.user.id).populate('trips');
-		if (!trips) {
-			return res.status(400).json({ msg: 'There are no trips to show' });
-		}
-		res.status(200).json(trips);
-	} catch (error) {
-		console.error(error.message);
-		res.status(500).send('Server error');
-	}
-});
-
 // @route   POST api/v1/trips
 // @desc    Create a trip
 // @access  Private
@@ -85,6 +69,22 @@ router.post(
 	}
 );
 
+// @route   GET api/v1/trips
+// @desc    Get current users trips
+// @access  Private
+router.get('/', auth, async (req, res) => {
+	try {
+		const trips = await User.findById(req.user.id).populate('trips');
+		if (!trips) {
+			return res.status(400).json({ msg: 'There are no trips to show' });
+		}
+		res.status(200).json(trips);
+	} catch (error) {
+		console.error(error.message);
+		res.status(500).send('Server error');
+	}
+});
+
 // @route   Get api/v1/trips/:id
 // @desc    Get a trip by trip ID
 // @access  Private
@@ -109,4 +109,5 @@ router.get('/:id', auth, async (req, res) => {
 		res.status(500).send('Server error');
 	}
 });
+
 module.exports = router;

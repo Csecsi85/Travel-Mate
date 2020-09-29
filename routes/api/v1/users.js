@@ -5,6 +5,7 @@ const jwt = require('jsonwebtoken');
 const config = require('config');
 const { check, validationResult } = require('express-validator');
 const User = require('../../../models/User');
+const auth = require('../../../middleware/auth');
 
 const router = express.Router();
 
@@ -79,5 +80,19 @@ router.post(
 		}
 	}
 );
+
+// @route   DELETE api/v1/users/
+// @desc    Delete user
+// @access  Private
+router.delete('/', auth, async (req, res) => {
+	try {
+		await User.deleteOne({ _id: req.user.id });
+		res.status(200).send('User has been deleted');
+	} catch (error) {
+		console.error(error.message);
+		res.status(500).send('server error');
+	}
+});
+
 
 module.exports = router;
