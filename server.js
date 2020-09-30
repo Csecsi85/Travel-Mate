@@ -1,23 +1,16 @@
 const express = require('express');
-const dotenv = require('dotenv');
-const connectDB = require('./config/db');
-
-dotenv.config({ path: './config/config.env' });
-
-const PORT = process.env.PORT || 5000;
-
+const config = require('./config/app');
 const app = express();
 
 // Connect database
-connectDB();
+require('./config/database');
 
-// Inist middleware
-app.use(express.json({ extended: false }));
-app.get('/', (req, res) => {
-	res.send('API running');
-});
+// Configure express + middleware
+require('./config/express')(app);
 
 // Define routes
-app.use('/api', require('./routes/api/api'));
+require('./routes/routes')(app);
 
-app.listen(PORT, () => console.log('Server started on port: ', PORT));
+app.listen(config.port, () =>
+  console.log('Server started on port: ', config.port)
+);

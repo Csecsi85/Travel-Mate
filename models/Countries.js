@@ -2,17 +2,17 @@
 const mongoose = require('mongoose');
 
 const countrySchema = new mongoose.Schema({
-	capital: {
-	type: String,
-	},
-	currency: {
-		type: Array,
-	},
-	name: {
-		type: String,
-	},
+  capital: {
+    type: String,
+  },
+  currency: {
+    type: Array,
+  },
+  name: {
+    type: String,
+  },
 });
 
-const Country = mongoose.model('country', countrySchema);
+const Country = mongoose.model('Country', countrySchema);
 
 module.exports = Country;

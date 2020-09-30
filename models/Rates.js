@@ -6,6 +6,6 @@ const ratesSchema = new mongoose.Schema({
   date: String,
 });
 
-const Rates = mongoose.model('rate', ratesSchema);
+const Rates = mongoose.model('Rate', ratesSchema);
 
 module.exports = Rates;
