@@ -1,0 +1,9 @@
+.header-text {
+  text-align: center;
+  /* width: calc(100% - 24px); */
+  width: 100%;
+}
+
+div div .app-bar {
+  background-color: #40b7b7;
+}

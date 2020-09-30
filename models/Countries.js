@@ -9,7 +9,7 @@ const countrySchema = new mongoose.Schema({
 		type: Array,
 	},
 	name: {
-		common: String,
+		type: String,
 	},
 });
 
