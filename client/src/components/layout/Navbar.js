@@ -1,4 +1,5 @@
 import React from 'react';
+import Register from '../Register/register';
 import PropTypes from 'prop-types';
 
 // Material Imports
@@ -84,7 +85,7 @@ function ResponsiveDrawer(props) {
 					</ListItemIcon>
 					<ListItemText primary={'Login'} />
 				</ListItem>
-				<ListItem button key={'register'}>
+				<ListItem button key={'register'} >
 					<ListItemIcon>
 						<PersonAddIcon />
 					</ListItemIcon>
