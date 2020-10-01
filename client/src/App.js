@@ -1,5 +1,6 @@
 import React, { Fragment } from 'react';
 import Navbar from './components/layout/Navbar';
+import Register from './components/Register/register'
 import './App.css';
 import CssBaseline from '@material-ui/core/CssBaseline';
 import 'fontsource-roboto/400.css';

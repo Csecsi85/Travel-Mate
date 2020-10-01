@@ -3,7 +3,7 @@ const fetch = require('node-fetch');
 
 const Rates = require('../models/Rates');
 
-exports.fetchDailyExchangeRates = cron.schedule('31 23 * * *', async () => {
+exports.fetchDailyExchangeRates = cron.schedule('0 1 * * *', async () => {
 	try {
 		const res = await fetch(
 			`http://data.fixer.io/api/latest?access_key=${process.env.FIXER_ACCESS_KEY}`

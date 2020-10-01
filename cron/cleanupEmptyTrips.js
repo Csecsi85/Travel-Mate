@@ -1,7 +1,7 @@
 const cron = require('node-cron');
 const Trip = require('../models/Trip');
 
-exports.cleanupEmptyTrips = cron.schedule('31 23 * * *', async () => {
+exports.cleanupEmptyTrips = cron.schedule('0 1 * * *', async () => {
 	try {
     await Trip.deleteMany({ user: { $exists: true, $size: 0 } });
     
