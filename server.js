@@ -12,5 +12,5 @@ require('./config/express')(app);
 require('./routes/routes')(app);
 
 app.listen(config.port, () =>
-  console.log('Server started on port: ', config.port)
+  console.log('Server started on port: ', config.port, 'Running as: ', config.env)
 );

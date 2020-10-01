@@ -8,7 +8,7 @@ const connect = async () => {
       useUnifiedTopology: true,
       useCreateIndex: true,
     });
-    return console.log(`Successfully connected to ${config.mongodbUri}`);
+    return console.log('Mongodb connected!');
   } catch (err) {
     console.log('Error connecting to database: ', err);
     return process.exit(1);

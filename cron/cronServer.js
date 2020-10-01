@@ -2,7 +2,7 @@ const express = require('express');
 const dotenv = require('dotenv');
 const http = require('http');
 
-const connectDB = require('../config/db');
+const connectDB = require('../config/cronDB');
 const fetchDailyExchangeRates = require('./fetchDailyExchangeRates');
 const cleanupEmptyTrips = require('./cleanupEmptyTrips');
 
@@ -27,5 +27,5 @@ fetchDailyExchangeRates;
 cleanupEmptyTrips;
 
 httpServer.listen(httpPort, () => {
-	console.log(`Cron server is alive on port: ${httpPort} runnign as: ${process.env.NODE_ENVIROMENT}`);
+	console.log('Cron server is alive on port: ',httpPort, 'runnign as: ', process.env.NODE_ENV);
 });

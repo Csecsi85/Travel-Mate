@@ -1,4 +1,4 @@
-require('dotenv').config();
+require('dotenv').config({ path: './config/config.env' });
 
 module.exports = {
   port: process.env.PORT || 5000,
@@ -9,4 +9,5 @@ module.exports = {
       ? process.env.JWT_SECRET
       : 'my-secret',
   mongodbUri: process.env.MONGODB_URI,
+  env: process.env.NODE_ENV,
 };
