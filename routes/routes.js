@@ -1,6 +1,6 @@
-const userRoute = require('./api/v1/users');
-const authRoute = require('./api/v1/auth');
-const tripRoute = require('./api/v1/trips');
+const userRoute = require('./api/users');
+const authRoute = require('./api/auth');
+const tripRoute = require('./api/trips');
 
 module.exports = (app) => {
   app.use('/users', userRoute);

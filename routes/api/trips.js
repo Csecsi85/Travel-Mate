@@ -1,10 +1,10 @@
 const router = require('express').Router();
 const { check, validationResult } = require('express-validator');
-const auth = require('../../../middleware/auth');
-const Trip = require('../../../models/Trip');
-const User = require('../../../models/User');
+const auth = require('../../middleware/auth');
+const Trip = require('../../models/Trip');
+const User = require('../../models/User');
 
-// @route   POST api/v1/trips
+// @route   POST api/trips
 // @desc    Create a trip
 // @access  Private
 router.post(
@@ -67,7 +67,7 @@ router.post(
   }
 );
 
-// @route   GET api/v1/trips
+// @route   GET api/trips
 // @desc    Get current users trips
 // @access  Private
 router.get('/', auth, async (req, res) => {
@@ -83,7 +83,7 @@ router.get('/', auth, async (req, res) => {
   }
 });
 
-// @route   Get api/v1/trips/:id
+// @route   Get api/trips/:id
 // @desc    Get a trip by trip ID
 // @access  Private
 router.get('/:id', auth, async (req, res) => {
@@ -108,7 +108,7 @@ router.get('/:id', auth, async (req, res) => {
   }
 });
 
-// @route DELETE api/v1/trips/:id
+// @route DELETE api/trips/:id
 // @desc Delete trip and remove tripID from trips array in users
 // @access Private
 router.delete('/:id', auth, async (req, res) => {

@@ -3,12 +3,12 @@ const bcrypt = require('bcryptjs');
 const gravatar = require('gravatar');
 const jwt = require('jsonwebtoken');
 const { check, validationResult } = require('express-validator');
-const config = require('../../../config/app');
-const User = require('../../../models/User');
-const auth = require('../../../middleware/auth');
-const Trip = require('../../../models/Trip');
+const config = require('../../config/app');
+const User = require('../../models/User');
+const auth = require('../../middleware/auth');
+const Trip = require('../../models/Trip');
 
-// @route   POST api/v1/users
+// @route   POST api/users
 // @desc    Register user
 // @access  Public
 //TODO: validation including checking for errors should be middleware module
@@ -81,7 +81,7 @@ router.post(
   }
 );
 
-// @route   DELETE api/v1/users/
+// @route   DELETE api/users/
 // @desc    Delete user
 // @access  Private
 router.delete('/', auth, async (req, res) => {
