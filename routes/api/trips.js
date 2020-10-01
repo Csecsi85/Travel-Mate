@@ -4,7 +4,7 @@ const auth = require('../../middleware/auth');
 const Trip = require('../../models/Trip');
 const User = require('../../models/User');
 
-// @route   POST api/trips
+// @route   POST /trips
 // @desc    Create a trip
 // @access  Private
 router.post(
@@ -67,7 +67,7 @@ router.post(
   }
 );
 
-// @route   GET api/trips
+// @route   GET /trips
 // @desc    Get current users trips
 // @access  Private
 router.get('/', auth, async (req, res) => {
@@ -83,7 +83,7 @@ router.get('/', auth, async (req, res) => {
   }
 });
 
-// @route   Get api/trips/:id
+// @route   Get /trips/:id
 // @desc    Get a trip by trip ID
 // @access  Private
 router.get('/:id', auth, async (req, res) => {
@@ -108,7 +108,7 @@ router.get('/:id', auth, async (req, res) => {
   }
 });
 
-// @route DELETE api/trips/:id
+// @route DELETE /trips/:id
 // @desc Delete trip and remove tripID from trips array in users
 // @access Private
 router.delete('/:id', auth, async (req, res) => {

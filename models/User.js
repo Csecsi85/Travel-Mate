@@ -23,7 +23,7 @@ const userSchema = new mongoose.Schema({
   trips: [
     {
       type: mongoose.Schema.Types.ObjectId,
-      ref: 'trip',
+      ref: 'Trip',
     },
   ],
   // emailVerified: {

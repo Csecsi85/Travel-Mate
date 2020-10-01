@@ -8,7 +8,7 @@ const User = require('../../models/User');
 const auth = require('../../middleware/auth');
 const Trip = require('../../models/Trip');
 
-// @route   POST api/users
+// @route   POST /users
 // @desc    Register user
 // @access  Public
 //TODO: validation including checking for errors should be middleware module
@@ -81,7 +81,7 @@ router.post(
   }
 );
 
-// @route   DELETE api/users/
+// @route   DELETE /users/
 // @desc    Delete user
 // @access  Private
 router.delete('/', auth, async (req, res) => {
